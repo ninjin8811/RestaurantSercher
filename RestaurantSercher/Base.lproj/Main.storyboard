@@ -43,6 +43,11 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="検  索"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="searchButtonPressed:" destination="XEz-Fc-69j" eventType="touchUpInside" id="zSE-KQ-JT8"/>
                                     <segue destination="8rR-FQ-Mbd" kind="show" identifier="goToSearchView" id="LpZ-DD-hsI"/>
@@ -63,6 +68,11 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="範囲を変更"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="changeRangeButtonPressed:" destination="XEz-Fc-69j" eventType="touchUpInside" id="OMr-XM-zlz"/>
                                 </connections>
