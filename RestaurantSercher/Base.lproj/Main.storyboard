@@ -40,7 +40,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="1eX-Pl-cd2" secondAttribute="height" multiplier="3:1" id="0ov-9g-heb"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="検  索"/>
                                 <userDefinedRuntimeAttributes>
@@ -59,7 +59,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TB1-4C-2Zz">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="現在地から" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VXJ-ZZ-8Kd">
+                                <rect key="frame" x="149.5" y="288.5" width="76.5" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TB1-4C-2Zz" customClass="PickerViewKeyboard" customModule="RestaurantSercher" customModuleProvider="target">
                                 <rect key="frame" x="135" y="370.5" width="105" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -83,6 +89,8 @@
                             <constraint firstItem="179-Vv-JEY" firstAttribute="centerY" secondItem="jba-xN-oLZ" secondAttribute="centerY" id="FP8-yn-O41"/>
                             <constraint firstItem="1eX-Pl-cd2" firstAttribute="top" secondItem="TB1-4C-2Zz" secondAttribute="bottom" constant="80" id="O1Z-F7-lYf"/>
                             <constraint firstItem="TB1-4C-2Zz" firstAttribute="centerX" secondItem="jba-xN-oLZ" secondAttribute="centerX" id="RuU-Y4-M2y"/>
+                            <constraint firstItem="179-Vv-JEY" firstAttribute="top" secondItem="VXJ-ZZ-8Kd" secondAttribute="bottom" constant="10" id="XKs-ha-Nwv"/>
+                            <constraint firstItem="VXJ-ZZ-8Kd" firstAttribute="centerX" secondItem="jba-xN-oLZ" secondAttribute="centerX" id="f6X-Yo-xHy"/>
                             <constraint firstItem="1eX-Pl-cd2" firstAttribute="centerX" secondItem="jba-xN-oLZ" secondAttribute="centerX" id="gy1-PC-0WF"/>
                             <constraint firstItem="TB1-4C-2Zz" firstAttribute="top" secondItem="179-Vv-JEY" secondAttribute="bottom" constant="20" id="jmi-Fn-pYq"/>
                             <constraint firstItem="179-Vv-JEY" firstAttribute="centerX" secondItem="jba-xN-oLZ" secondAttribute="centerX" id="zAj-QP-VYI"/>
@@ -91,6 +99,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="K8i-vx-jRJ"/>
                     <connections>
+                        <outlet property="pickerKeyboardButton" destination="TB1-4C-2Zz" id="4S0-sv-fI2"/>
                         <outlet property="rangeLabel" destination="179-Vv-JEY" id="OzD-Yc-9kF"/>
                     </connections>
                 </viewController>
