@@ -50,7 +50,6 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="searchButtonPressed:" destination="XEz-Fc-69j" eventType="touchUpInside" id="zSE-KQ-JT8"/>
-                                    <segue destination="8rR-FQ-Mbd" kind="show" identifier="goToSearchView" id="LpZ-DD-hsI"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="179-Vv-JEY">
@@ -98,6 +97,7 @@
                     <connections>
                         <outlet property="pickerKeyboardButton" destination="TB1-4C-2Zz" id="4S0-sv-fI2"/>
                         <outlet property="rangeLabel" destination="179-Vv-JEY" id="OzD-Yc-9kF"/>
+                        <segue destination="8rR-FQ-Mbd" kind="show" identifier="goToSearchView" id="yaD-JC-7sA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kYw-4E-slp" userLabel="First Responder" sceneMemberID="firstResponder"/>
