@@ -5,15 +5,12 @@ class StartViewController: UIViewController {
     @IBOutlet weak private var pickerKeyboardButton: PickerViewKeyboard!
     @IBOutlet weak private var rangeLabel: UILabel!
 
-    let pickerDataSource: [String] = ["100", "300", "500", "800", "1000", "1500", "2000", "3000"]
+    let pickerDataSource: [String] = ["100m", "300m", "500m", "800m", "1000m", "1500m", "2000m", "3000m"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         pickerKeyboardButton.delegate = self
-    }
-
-    @IBAction func changeRangeButtonPressed(_ sender: UIButton) {
     }
 
     @IBAction func searchButtonPressed(_ sender: UIButton) {
@@ -30,10 +27,12 @@ extension StartViewController: PickerViewKeyboardDelegate {
     }
 
     func didCancel(sender: PickerViewKeyboard) {
-        rangeLabel.text = "何も選択されてないよ"
+        print("キャンセル")
+        sender.resignFirstResponder()
     }
 
     func didDone(sender: PickerViewKeyboard, selectedData: String) {
-        print("キャンセル")
+        rangeLabel.text = "半径 \(selectedData) 以内"
+        sender.resignFirstResponder()
     }
 }

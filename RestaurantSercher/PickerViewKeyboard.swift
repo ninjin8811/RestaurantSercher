@@ -4,6 +4,7 @@ class PickerViewKeyboard: UIButton {
 
     weak var delegate: PickerViewKeyboardDelegate!
     var pickerView: UIPickerView!
+    var selectedIndex = 0
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -28,6 +29,8 @@ class PickerViewKeyboard: UIButton {
         pickerView = UIPickerView()
         pickerView.delegate = self
         let row = delegate.initSelectedRow(sender: self)
+        selectedIndex = row
+        // はじめに表示する項目を指定
         pickerView.selectRow(row, inComponent: 0, animated: true)
 
         return pickerView
@@ -56,7 +59,7 @@ class PickerViewKeyboard: UIButton {
     }
     @objc
     func donePicker() {
-        delegate.didDone(sender: self, selectedData: data[pickerView.selectedRow(inComponent: 0)])
+        delegate.didDone(sender: self, selectedData: data[selectedIndex])
     }
 }
 
@@ -71,5 +74,9 @@ extension PickerViewKeyboard: UIPickerViewDelegate, UIPickerViewDataSource {
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return data[row]
+    }
+
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectedIndex = row
     }
 }
