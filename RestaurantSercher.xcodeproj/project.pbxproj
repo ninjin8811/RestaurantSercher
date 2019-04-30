@@ -15,6 +15,8 @@
 		9AA1DCC322759F56006FAAB4 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA1DCC222759F56006FAAB4 /* StartViewController.swift */; };
 		9AA1DCC52275B29F006FAAB4 /* PickerViewKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA1DCC42275B29F006FAAB4 /* PickerViewKeyboard.swift */; };
 		9AA1DCC72275CFE3006FAAB4 /* PickerViewKeyboardDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA1DCC62275CFE3006FAAB4 /* PickerViewKeyboardDelegate.swift */; };
+		9AD2F5882278087900ECC72C /* SearchedRestaurantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD2F5862278087900ECC72C /* SearchedRestaurantCell.swift */; };
+		9AD2F5892278087900ECC72C /* SearchedRestaurantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AD2F5872278087900ECC72C /* SearchedRestaurantCell.xib */; };
 		A4865CE0D6E2076DFA70712A /* Pods_RestaurantSercher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10D276725612C0EC81E50132 /* Pods_RestaurantSercher.framework */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +34,8 @@
 		9AA1DCC222759F56006FAAB4 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		9AA1DCC42275B29F006FAAB4 /* PickerViewKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewKeyboard.swift; sourceTree = "<group>"; };
 		9AA1DCC62275CFE3006FAAB4 /* PickerViewKeyboardDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewKeyboardDelegate.swift; sourceTree = "<group>"; };
+		9AD2F5862278087900ECC72C /* SearchedRestaurantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchedRestaurantCell.swift; sourceTree = "<group>"; };
+		9AD2F5872278087900ECC72C /* SearchedRestaurantCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchedRestaurantCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +104,8 @@
 		9AA1DCBE22749906006FAAB4 /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
+				9AD2F5862278087900ECC72C /* SearchedRestaurantCell.swift */,
+				9AD2F5872278087900ECC72C /* SearchedRestaurantCell.xib */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -177,6 +183,7 @@
 				9A215FB1227425810080BEB7 /* LaunchScreen.storyboard in Resources */,
 				9A215FAE227425810080BEB7 /* Assets.xcassets in Resources */,
 				9A215FAC227425800080BEB7 /* Main.storyboard in Resources */,
+				9AD2F5892278087900ECC72C /* SearchedRestaurantCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +265,7 @@
 				9AA1DCC122749A59006FAAB4 /* SearchTableViewController.swift in Sources */,
 				9AA1DCC322759F56006FAAB4 /* StartViewController.swift in Sources */,
 				9AA1DCC72275CFE3006FAAB4 /* PickerViewKeyboardDelegate.swift in Sources */,
+				9AD2F5882278087900ECC72C /* SearchedRestaurantCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
