@@ -2,6 +2,7 @@ excluded:
   - Pods/
 disabled_rules:
   - class_delegate_protocol
+  - identifier_name
 opt_in_rules:
   - empty_count
   - file_header

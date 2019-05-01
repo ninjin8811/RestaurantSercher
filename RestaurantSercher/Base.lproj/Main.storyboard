@@ -52,8 +52,8 @@
                                     <action selector="searchButtonPressed:" destination="XEz-Fc-69j" eventType="touchUpInside" id="zSE-KQ-JT8"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="179-Vv-JEY">
-                                <rect key="frame" x="154" y="316.5" width="67" height="34"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="半径 500m 以内" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="179-Vv-JEY">
+                                <rect key="frame" x="87.5" y="316.5" width="200" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -104,29 +104,54 @@
             </objects>
             <point key="canvasLocation" x="-680.79999999999995" y="8.5457271364317844"/>
         </scene>
-        <!--Search Table View Controller-->
+        <!--検索結果-->
         <scene sceneID="aga-1I-hd6">
             <objects>
                 <tableViewController id="8rR-FQ-Mbd" customClass="SearchTableViewController" customModule="RestaurantSercher" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="f70-DO-0pY">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="155" estimatedRowHeight="-1" sectionHeaderHeight="10" sectionFooterHeight="18" id="f70-DO-0pY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="jBe-gx-twS">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="37"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="23件見つかりました" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vUG-6A-ERY">
+                                    <rect key="frame" x="108" y="8.5" width="159" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="vUG-6A-ERY" firstAttribute="centerY" secondItem="jBe-gx-twS" secondAttribute="centerY" id="WOx-kI-cp6"/>
+                                <constraint firstItem="vUG-6A-ERY" firstAttribute="centerX" secondItem="jBe-gx-twS" secondAttribute="centerX" id="uKJ-aq-3Dn"/>
+                            </constraints>
+                        </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="restaurantDataCell" id="waF-jC-Dga">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchTableViewCell" id="waF-jC-Dga">
+                                <rect key="frame" x="0.0" y="92.5" width="375" height="155"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="waF-jC-Dga" id="Gy3-3l-tjL">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="154.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
+                        <sections/>
                         <connections>
                             <outlet property="dataSource" destination="8rR-FQ-Mbd" id="NBM-wj-LKA"/>
                             <outlet property="delegate" destination="8rR-FQ-Mbd" id="Fet-jG-L8f"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="検索結果" id="IiX-LE-pEn">
+                        <barButtonItem key="rightBarButtonItem" title="絞り込み" id="rta-px-o8n"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="restListTableView" destination="f70-DO-0pY" id="3Q8-N6-UFW"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TEG-0Y-Ayc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

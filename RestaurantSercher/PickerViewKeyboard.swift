@@ -1,5 +1,12 @@
 import UIKit
 
+protocol PickerViewKeyboardDelegate: StartViewController {
+    func titlesOfPickerViewKeyboard(sender: PickerViewKeyboard) -> [String]
+    func initSelectedRow(sender: PickerViewKeyboard) -> Int
+    func didCancel(sender: PickerViewKeyboard)
+    func didDone(sender: PickerViewKeyboard, selectedRow: Int)
+}
+
 class PickerViewKeyboard: UIButton {
 
     weak var delegate: PickerViewKeyboardDelegate!
@@ -59,7 +66,7 @@ class PickerViewKeyboard: UIButton {
     }
     @objc
     func donePicker() {
-        delegate.didDone(sender: self, selectedData: data[selectedIndex])
+        delegate.didDone(sender: self, selectedRow: selectedIndex)
     }
 }
 

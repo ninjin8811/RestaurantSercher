@@ -10,5 +10,6 @@ target 'RestaurantSercher' do
 pod 'SwiftyJSON'
 pod 'Alamofire'
 pod 'SwiftLint'
+pod 'SVProgressHUD'
 
 end
