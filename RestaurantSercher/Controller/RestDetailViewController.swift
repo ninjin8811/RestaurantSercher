@@ -3,8 +3,18 @@ import UIKit
 
 class RestDetailViewController: UIViewController {
 
-    @IBOutlet weak private var restName: UILabel!
     @IBOutlet weak private var restImageView1: UIImageView!
+    @IBOutlet weak var restImageView2: UIImageView!
+    @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var budgetLabel: UILabel!
+    @IBOutlet weak var prLabel: UILabel!
+    @IBOutlet weak var accessLabel: UILabel!
+    @IBOutlet weak var opantimeLabel: UILabel!
+    @IBOutlet weak var holidayLabel: UILabel!
+    @IBOutlet weak var restNameLabel: UILabel!
+    
+    
+    
 
     var accessSentense = ""
     var receivedData: Restaurant?
@@ -45,7 +55,7 @@ class RestDetailViewController: UIViewController {
 
     func setContents() {
         if let restData = receivedData {
-            restName.text = restData.name
+            restNameLabel.text = restData.name
 
             guard let imageURL1 = URL(string: restData.imageUrl.shopImage1) else {
                 preconditionFailure("StringからURLに変換できませんでした！")

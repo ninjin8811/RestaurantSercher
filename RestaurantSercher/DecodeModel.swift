@@ -32,6 +32,7 @@ struct Access: Codable {
 
 struct RestImage: Codable {
     let shopImage1: String
+    let shopImage2: String
 }
 
 struct PRData: Codable {
