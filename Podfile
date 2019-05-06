@@ -11,5 +11,6 @@ pod 'SwiftyJSON'
 pod 'Alamofire'
 pod 'SwiftLint'
 pod 'SVProgressHUD'
+pod 'Nuke'
 
 end

@@ -18,6 +18,7 @@ class StartViewController: UIViewController {
     var rangeIndex = 2
     var nowLatitude: Float = 0
     var nowLongitude: Float = 0
+    var passDataToNextView: GnaviData?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,25 +31,42 @@ class StartViewController: UIViewController {
 
     @IBAction func searchButtonPressed(_ sender: UIButton) {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            SVProgressHUD.show()
             locationManager.requestLocation()
-            sendRequest()
-            SVProgressHUD.dismiss()
-            //            performSegue(withIdentifier: "goToSearchView", sender: self)
+
+            sendRequest({ isFetched in
+                if isFetched == true {
+                    self.performSegue(withIdentifier: "goToSearchView", sender: self)
+                } else {
+                    print("sendRequest失敗！")
+                }
+            })
         } else {
             print("位置情報の取得を許可されていません")
         }
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let destinationVC = segue.destination as? SearchTableViewController else {
+            preconditionFailure("遷移先のViewを取得できませんでした")
+        }
+        if let passData = passDataToNextView {
+            destinationVC.hitCount = passData.hitPerPage
+            destinationVC.restaurants = passData.rest
+        }
+    }
+
     // MARK: - Fetching restaurant data
-    func sendRequest() {
+    func sendRequest(_ after:@escaping (Bool) -> Void) {
+        var isFetched = false
         let params: [String: Any] = [
             "keyid": accessKey,
             "range": rangeIndex,
             "latitude": nowLatitude,
             "longitude": nowLongitude,
-            "hit_per_page": 2
+            "hit_per_page": 8 //ここ変える！！
         ]
+
+        SVProgressHUD.show()
 
         Alamofire.request(gnaviURL, method: .get, parameters: params).responseData(completionHandler: { (response) in
             if response.result.isSuccess == true {
@@ -60,14 +78,21 @@ class StartViewController: UIViewController {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let decodedData = try decoder.decode(GnaviData.self, from: dataResponse)
+                    self.passDataToNextView = decodedData
 
                     print(decodedData)
+
+                    if decodedData.totalHitCount != 0 {
+                        isFetched = true
+                    }
                 } catch {
                     print("トライエラー！")
                 }
             } else {
                 print("ぐるなびからデータを取得できませんでした： \(String(describing: response.result.error))")
             }
+            after(isFetched)
+            SVProgressHUD.dismiss()
         })
     }
 }

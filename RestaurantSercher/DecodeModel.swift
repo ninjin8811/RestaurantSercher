@@ -2,6 +2,7 @@ import Foundation
 
 struct GnaviData: Codable {
     let totalHitCount: Int
+    let hitPerPage: Int
     var rest: [Restaurant]
 }
 
@@ -18,6 +19,7 @@ struct Restaurant: Codable {
     let access: Access
     let imageUrl: RestImage
     let pr: PRData
+    let code: Code
 }
 
 struct Access: Codable {
@@ -35,4 +37,8 @@ struct RestImage: Codable {
 struct PRData: Codable {
     let prShort: String
     let prLong: String
+}
+
+struct Code: Codable {
+    let categoryNameL: [String]
 }

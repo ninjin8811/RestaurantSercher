@@ -146,16 +146,56 @@
                             <outlet property="delegate" destination="8rR-FQ-Mbd" id="Fet-jG-L8f"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="検索結果" id="IiX-LE-pEn">
-                        <barButtonItem key="rightBarButtonItem" title="絞り込み" id="rta-px-o8n"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="検索結果" id="IiX-LE-pEn"/>
                     <connections>
+                        <outlet property="hitCountLabel" destination="vUG-6A-ERY" id="AML-sN-5nA"/>
                         <outlet property="restListTableView" destination="f70-DO-0pY" id="3Q8-N6-UFW"/>
+                        <segue destination="ech-sx-u9V" kind="show" identifier="goToRestDetail" id="tYW-ez-M88"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TEG-0Y-Ayc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="71" y="9"/>
+        </scene>
+        <!--Rest Detail View Controller-->
+        <scene sceneID="4cz-Wo-T0Y">
+            <objects>
+                <viewController id="ech-sx-u9V" customClass="RestDetailViewController" customModule="RestaurantSercher" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xIl-T7-KBL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qA4-8R-Lpp">
+                                <rect key="frame" x="166.5" y="142.5" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uIw-Bu-U8l">
+                                <rect key="frame" x="67.5" y="213.5" width="240" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="W8U-Nd-vFK"/>
+                                    <constraint firstAttribute="height" constant="240" id="XQh-oK-iPp"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="qA4-8R-Lpp" firstAttribute="centerX" secondItem="xIl-T7-KBL" secondAttribute="centerX" id="3TR-0g-8kw"/>
+                            <constraint firstItem="uIw-Bu-U8l" firstAttribute="centerY" secondItem="xIl-T7-KBL" secondAttribute="centerY" id="MrE-TC-Zzo"/>
+                            <constraint firstItem="uIw-Bu-U8l" firstAttribute="top" secondItem="qA4-8R-Lpp" secondAttribute="bottom" constant="50" id="dPw-vV-Wue"/>
+                            <constraint firstItem="uIw-Bu-U8l" firstAttribute="centerX" secondItem="xIl-T7-KBL" secondAttribute="centerX" id="wjg-Z2-tvg"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="wCs-9Y-rfw"/>
+                    </view>
+                    <connections>
+                        <outlet property="restImageView1" destination="uIw-Bu-U8l" id="eWu-sN-tB2"/>
+                        <outlet property="restName" destination="qA4-8R-Lpp" id="2oy-ab-7Lv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nr1-k7-4vz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="857" y="9"/>
         </scene>
     </scenes>
 </document>

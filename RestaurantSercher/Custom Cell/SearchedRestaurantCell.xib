@@ -29,7 +29,6 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.40000000600000002" green="1" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="aH2-BH-3Gk"/>
                             <constraint firstItem="mBc-y2-yVr" firstAttribute="centerY" secondItem="Gtz-LS-Zyz" secondAttribute="centerY" id="dNK-Uq-aFR"/>
@@ -47,48 +46,49 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="イタリアン料理" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PF7-cW-oFz">
-                                <rect key="frame" x="110" y="10" width="65" height="11"/>
+                                <rect key="frame" x="110" y="10" width="93" height="16"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="地下鉄御堂筋なんば駅6番出口 徒歩5分" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JDO-sl-Z4S">
+                                <rect key="frame" x="110" y="36" width="196" height="11"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="地下鉄御堂筋なんば駅6番出口 徒歩5分" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JDO-sl-Z4S">
-                                <rect key="frame" x="110" y="31" width="162" height="11"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:00 ~ 23:00" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gdB-EK-2XP">
+                                <rect key="frame" x="110" y="61" width="196" height="16"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="￥ 1000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vs9-aF-dEx">
-                                <rect key="frame" x="110" y="73" width="44" height="15"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="￥ 1000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vs9-aF-dEx">
+                                <rect key="frame" x="237" y="12" width="44" height="15"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:00 ~ 23:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gdB-EK-2XP">
-                                <rect key="frame" x="110" y="49" width="64" height="12"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="wwM-NY-H5L" firstAttribute="leading" secondItem="BHd-h6-zJ7" secondAttribute="leading" id="0KJ-Fu-1QL"/>
                             <constraint firstAttribute="height" constant="100" id="1J7-K9-Mld"/>
-                            <constraint firstItem="gdB-EK-2XP" firstAttribute="top" secondItem="JDO-sl-Z4S" secondAttribute="bottom" constant="7" id="FZZ-qE-ukj"/>
+                            <constraint firstAttribute="trailing" secondItem="gdB-EK-2XP" secondAttribute="trailing" constant="5" id="3do-Q4-zhI"/>
+                            <constraint firstAttribute="trailing" secondItem="JDO-sl-Z4S" secondAttribute="trailing" constant="5" id="5Nf-aF-CNb"/>
+                            <constraint firstAttribute="trailing" secondItem="vs9-aF-dEx" secondAttribute="trailing" constant="30" id="L0z-aL-8QW"/>
                             <constraint firstItem="wwM-NY-H5L" firstAttribute="top" secondItem="BHd-h6-zJ7" secondAttribute="top" id="OhS-xM-pLM"/>
                             <constraint firstItem="gdB-EK-2XP" firstAttribute="leading" secondItem="wwM-NY-H5L" secondAttribute="trailing" constant="10" id="VYp-Td-zk0"/>
                             <constraint firstItem="JDO-sl-Z4S" firstAttribute="top" secondItem="PF7-cW-oFz" secondAttribute="bottom" constant="10" id="c4C-94-puY"/>
+                            <constraint firstItem="gdB-EK-2XP" firstAttribute="top" secondItem="JDO-sl-Z4S" secondAttribute="bottom" constant="14" id="gIN-6v-on4"/>
                             <constraint firstAttribute="bottom" secondItem="wwM-NY-H5L" secondAttribute="bottom" id="h0I-GC-BHY"/>
                             <constraint firstItem="JDO-sl-Z4S" firstAttribute="leading" secondItem="wwM-NY-H5L" secondAttribute="trailing" constant="10" id="hv5-QR-94F"/>
+                            <constraint firstItem="JDO-sl-Z4S" firstAttribute="top" secondItem="vs9-aF-dEx" secondAttribute="bottom" constant="9" id="oiC-Tp-f2B"/>
                             <constraint firstItem="PF7-cW-oFz" firstAttribute="leading" secondItem="wwM-NY-H5L" secondAttribute="trailing" constant="10" id="qI4-Tv-j7C"/>
                             <constraint firstItem="PF7-cW-oFz" firstAttribute="top" secondItem="BHd-h6-zJ7" secondAttribute="top" constant="10" id="vh9-Gy-Hly"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eyx-J3-PPa">
                         <rect key="frame" x="0.0" y="140" width="316" height="14.5"/>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                 </subviews>
                 <constraints>
@@ -109,7 +109,7 @@
             <connections>
                 <outlet property="accessLabel" destination="JDO-sl-Z4S" id="4yA-SN-WYw"/>
                 <outlet property="budgetLabel" destination="vs9-aF-dEx" id="N9n-sh-5Vj"/>
-                <outlet property="openingHoursLabel" destination="gdB-EK-2XP" id="aQd-lj-IU1"/>
+                <outlet property="prLabel" destination="gdB-EK-2XP" id="ZY3-2g-bwZ"/>
                 <outlet property="restCategoryLabel" destination="PF7-cW-oFz" id="TRk-iL-ACp"/>
                 <outlet property="restImageView" destination="wwM-NY-H5L" id="mu9-u7-dFz"/>
                 <outlet property="restNameLabel" destination="mBc-y2-yVr" id="Xsy-Bh-ws7"/>
