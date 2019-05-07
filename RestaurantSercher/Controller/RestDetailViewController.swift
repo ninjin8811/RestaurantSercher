@@ -3,19 +3,18 @@ import UIKit
 
 class RestDetailViewController: UIViewController {
 
+    @IBOutlet weak private var categoryLabel: UILabel!
+    @IBOutlet weak private var budgetLabel: UILabel!
+    @IBOutlet weak private var restNameLabel: UILabel!
+    @IBOutlet weak private var accessLabel: UILabel!
+    @IBOutlet weak private var opentimeLabel: UILabel!
+    @IBOutlet weak private var holidayLabel: UILabel!
+    @IBOutlet weak private var urlButton: UIButton!
     @IBOutlet weak private var restImageView1: UIImageView!
-    @IBOutlet weak var restImageView2: UIImageView!
-    @IBOutlet weak var categoryLabel: UILabel!
-    @IBOutlet weak var budgetLabel: UILabel!
-    @IBOutlet weak var prLabel: UILabel!
-    @IBOutlet weak var accessLabel: UILabel!
-    @IBOutlet weak var opantimeLabel: UILabel!
-    @IBOutlet weak var holidayLabel: UILabel!
-    @IBOutlet weak var restNameLabel: UILabel!
+    @IBOutlet weak private var restImageView2: UIImageView!
+    @IBOutlet weak private var addressLabel: UILabel!
+    @IBOutlet weak private var callButton: UIButton!
     
-    
-    
-
     var accessSentense = ""
     var receivedData: Restaurant?
 
@@ -55,14 +54,28 @@ class RestDetailViewController: UIViewController {
 
     func setContents() {
         if let restData = receivedData {
-            restNameLabel.text = restData.name
-
             guard let imageURL1 = URL(string: restData.imageUrl.shopImage1) else {
                 preconditionFailure("StringからURLに変換できませんでした！")
             }
-            let request = ImageRequest(url: imageURL1, targetSize: CGSize(width: 500, height: 500), contentMode: .aspectFill)
-            Nuke.loadImage(with: request, into: restImageView1)
+            guard let imageURL2 = URL(string: restData.imageUrl.shopImage2) else {
+                preconditionFailure("StringからURLに変換できませんでした！")
+            }
+            let request1 = ImageRequest(url: imageURL1, targetSize: CGSize(width: 500, height: 500), contentMode: .aspectFill)
+            let request2 = ImageRequest(url: imageURL2, targetSize: CGSize(width: 500, height: 500), contentMode: .aspectFill)
+            Nuke.loadImage(with: request1, into: restImageView1)
+            Nuke.loadImage(with: request2, into: restImageView2)
 
+            restNameLabel.text = restData.name
+            addressLabel.text = restData.address
+            categoryLabel.text = restData.code.categoryNameL[0]
+            budgetLabel.text = "￥ \(restData.budget)"
+            accessLabel.text = accessSentense
+            opentimeLabel.text = restData.opentime
+            holidayLabel.text = restData.holiday
         }
     }
+
+    @IBAction func callButtonPressed(_ sender: UIButton) {
+    }
+
 }
