@@ -12,6 +12,7 @@
 		9A215FAE227425810080BEB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A215FAD227425810080BEB7 /* Assets.xcassets */; };
 		9A215FB1227425810080BEB7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A215FAF227425810080BEB7 /* LaunchScreen.storyboard */; };
 		9A558513227F521300C45675 /* RestDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A558512227F521300C45675 /* RestDetailViewController.swift */; };
+		9A8572012281E1510009C5E3 /* RequestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8572002281E1510009C5E3 /* RequestData.swift */; };
 		9AA1DCC122749A59006FAAB4 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA1DCC022749A59006FAAB4 /* SearchTableViewController.swift */; };
 		9AA1DCC322759F56006FAAB4 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA1DCC222759F56006FAAB4 /* StartViewController.swift */; };
 		9AA1DCC52275B29F006FAAB4 /* PickerViewKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA1DCC42275B29F006FAAB4 /* PickerViewKeyboard.swift */; };
@@ -32,6 +33,7 @@
 		9A215FB0227425810080BEB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9A215FB2227425810080BEB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A558512227F521300C45675 /* RestDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestDetailViewController.swift; sourceTree = "<group>"; };
+		9A8572002281E1510009C5E3 /* RequestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestData.swift; sourceTree = "<group>"; };
 		9AA1DCC022749A59006FAAB4 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		9AA1DCC222759F56006FAAB4 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		9AA1DCC42275B29F006FAAB4 /* PickerViewKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewKeyboard.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				9A215FA6227425800080BEB7 /* AppDelegate.swift */,
 				9AA1DCC42275B29F006FAAB4 /* PickerViewKeyboard.swift */,
 				9AD2F58B2278C4E800ECC72C /* DecodeModel.swift */,
+				9A8572002281E1510009C5E3 /* RequestData.swift */,
 				9AA1DCBE22749906006FAAB4 /* Custom Cell */,
 				9AA1DCBF2274990A006FAAB4 /* Controller */,
 				9A215FAA227425800080BEB7 /* Main.storyboard */,
@@ -274,6 +277,7 @@
 				9AD2F5882278087900ECC72C /* SearchedRestaurantCell.swift in Sources */,
 				9A558513227F521300C45675 /* RestDetailViewController.swift in Sources */,
 				9AD2F58C2278C4E800ECC72C /* DecodeModel.swift in Sources */,
+				9A8572012281E1510009C5E3 /* RequestData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

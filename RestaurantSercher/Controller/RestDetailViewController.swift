@@ -14,7 +14,7 @@ class RestDetailViewController: UIViewController {
     @IBOutlet weak private var restImageView2: UIImageView!
     @IBOutlet weak private var addressLabel: UILabel!
     @IBOutlet weak private var callButton: UIButton!
-    
+
     var accessSentense = ""
     var receivedData: Restaurant?
 
@@ -72,10 +72,34 @@ class RestDetailViewController: UIViewController {
             accessLabel.text = accessSentense
             opentimeLabel.text = restData.opentime
             holidayLabel.text = restData.holiday
+            callButton.titleLabel?.text = restData.tel
+            urlButton.titleLabel?.text = restData.url
         }
     }
 
-    @IBAction func callButtonPressed(_ sender: UIButton) {
+    @IBAction func callButtonPressed(_ sender: UIButton) { //info.plistに許可を書く
+
+        if let url = receivedData?.url {
+            guard let openUrl = URL(string: url) else {
+                preconditionFailure("レストランページのURLを変換できませんでした")
+            }
+            UIApplication.shared.open(openUrl)
+        }
     }
 
+    @IBAction func urlButtonPressed(_ sender: UIButton) { //info.plistに許可が必要かもしれない
+
+        if let num = receivedData?.tel {
+            var connectedNum = ""
+            let splitNum = num.components(separatedBy: "-")
+            for item in splitNum {
+                connectedNum += item
+            }
+
+            guard let callUrl = URL(string: "tel://\(connectedNum)") else {
+                preconditionFailure("電話番号をURLに変換できませんでした")
+            }
+            UIApplication.shared.open(callUrl)
+        }
+    }
 }

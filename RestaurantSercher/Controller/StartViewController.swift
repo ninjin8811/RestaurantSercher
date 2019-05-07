@@ -50,7 +50,7 @@ class StartViewController: UIViewController {
             preconditionFailure("遷移先のViewを取得できませんでした")
         }
         if let passData = passDataToNextView {
-            destinationVC.hitCount = passData.hitPerPage
+            destinationVC.hitCount = passData.totalHitCount
             destinationVC.restaurants = passData.rest
         }
     }
@@ -63,7 +63,7 @@ class StartViewController: UIViewController {
             "range": rangeIndex,
             "latitude": nowLatitude,
             "longitude": nowLongitude,
-            "hit_per_page": 8 //ここ変える！！
+            "hit_per_page": 15 //ここ変える！！
         ]
 
         SVProgressHUD.show()

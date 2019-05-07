@@ -105,4 +105,8 @@ class SearchTableViewController: UITableViewController {
 
         performSegue(withIdentifier: "goToRestDetail", sender: self)
     }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        <#code#>
+    }
 }

@@ -280,6 +280,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tU0-zx-K66">
                                 <rect key="frame" x="172.5" y="587" width="30" height="30"/>
                                 <state key="normal" title="URL"/>
+                                <connections>
+                                    <action selector="urlButtonPressed:" destination="ech-sx-u9V" eventType="touchUpInside" id="R7j-5l-U1Y"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Opentime" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HsL-qc-pRX">
                                 <rect key="frame" x="20" y="423" width="335" height="17"/>
