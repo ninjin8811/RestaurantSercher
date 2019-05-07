@@ -278,8 +278,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tU0-zx-K66">
-                                <rect key="frame" x="172.5" y="587" width="30" height="30"/>
-                                <state key="normal" title="URL"/>
+                                <rect key="frame" x="144.5" y="588" width="86" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="ホームページ"/>
                                 <connections>
                                     <action selector="urlButtonPressed:" destination="ech-sx-u9V" eventType="touchUpInside" id="R7j-5l-U1Y"/>
                                 </connections>

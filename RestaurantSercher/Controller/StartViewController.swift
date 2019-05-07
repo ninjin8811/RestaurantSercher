@@ -6,6 +6,8 @@ import UIKit
 
 class StartViewController: UIViewController {
 
+    let delegate = UIApplication.shared.delegate as? AppDelegate
+
     @IBOutlet weak private var pickerKeyboardButton: PickerViewKeyboard!
     @IBOutlet weak private var rangeLabel: UILabel!
 
@@ -55,7 +57,7 @@ class StartViewController: UIViewController {
         }
     }
 
-    // MARK: - Fetching restaurant data
+    // MARK: - ぐるなびからデータを取得する処理
     func sendRequest(_ after:@escaping (Bool) -> Void) {
         var isFetched = false
         let params: [String: Any] = [
@@ -66,8 +68,15 @@ class StartViewController: UIViewController {
             "hit_per_page": 15 //ここ変える！！
         ]
 
+        if let appDelegate = delegate {
+            appDelegate.latitude = nowLatitude
+            appDelegate.longitude = nowLongitude
+            appDelegate.rangeIndex = rangeIndex
+        }
+
         SVProgressHUD.show()
 
+        //2回目以降のリクエストがうまくいかない
         Alamofire.request(gnaviURL, method: .get, parameters: params).responseData(completionHandler: { (response) in
             if response.result.isSuccess == true {
                 do {

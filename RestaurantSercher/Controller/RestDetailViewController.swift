@@ -54,41 +54,32 @@ class RestDetailViewController: UIViewController {
 
     func setContents() {
         if let restData = receivedData {
-            guard let imageURL1 = URL(string: restData.imageUrl.shopImage1) else {
-                preconditionFailure("StringからURLに変換できませんでした！")
+            if let imageURL1 = URL(string: restData.imageUrl.shopImage1) {
+                let request1 = ImageRequest(url: imageURL1, targetSize: CGSize(width: 500, height: 500), contentMode: .aspectFill)
+                Nuke.loadImage(with: request1, into: restImageView1)
+            } else {
+                restImageView1.image = UIImage(named: "no-image")
             }
-            guard let imageURL2 = URL(string: restData.imageUrl.shopImage2) else {
-                preconditionFailure("StringからURLに変換できませんでした！")
+            if let imageURL2 = URL(string: restData.imageUrl.shopImage2) {
+                let request2 = ImageRequest(url: imageURL2, targetSize: CGSize(width: 500, height: 500), contentMode: .aspectFill)
+                Nuke.loadImage(with: request2, into: restImageView2)
+            } else {
+                restImageView2.image = UIImage(named: "no-image")
             }
-            let request1 = ImageRequest(url: imageURL1, targetSize: CGSize(width: 500, height: 500), contentMode: .aspectFill)
-            let request2 = ImageRequest(url: imageURL2, targetSize: CGSize(width: 500, height: 500), contentMode: .aspectFill)
-            Nuke.loadImage(with: request1, into: restImageView1)
-            Nuke.loadImage(with: request2, into: restImageView2)
 
             restNameLabel.text = restData.name
             addressLabel.text = restData.address
             categoryLabel.text = restData.code.categoryNameL[0]
             budgetLabel.text = "￥ \(restData.budget)"
-            accessLabel.text = accessSentense
-            opentimeLabel.text = restData.opentime
-            holidayLabel.text = restData.holiday
+            accessLabel.text = "アクセス: \(accessSentense)"
+            opentimeLabel.text = "営業時間: \(restData.opentime)"
+            holidayLabel.text = "定休日: \(restData.holiday)"
             callButton.titleLabel?.text = restData.tel
             urlButton.titleLabel?.text = restData.url
         }
     }
 
-    @IBAction func callButtonPressed(_ sender: UIButton) { //info.plistに許可を書く
-
-        if let url = receivedData?.url {
-            guard let openUrl = URL(string: url) else {
-                preconditionFailure("レストランページのURLを変換できませんでした")
-            }
-            UIApplication.shared.open(openUrl)
-        }
-    }
-
-    @IBAction func urlButtonPressed(_ sender: UIButton) { //info.plistに許可が必要かもしれない
-
+    @IBAction func callButtonPressed(_ sender: UIButton) { //info.plistの許可が必要かもしれない
         if let num = receivedData?.tel {
             var connectedNum = ""
             let splitNum = num.components(separatedBy: "-")
@@ -100,6 +91,15 @@ class RestDetailViewController: UIViewController {
                 preconditionFailure("電話番号をURLに変換できませんでした")
             }
             UIApplication.shared.open(callUrl)
+        }
+    }
+
+    @IBAction func urlButtonPressed(_ sender: UIButton) { //info.plistに許可を書く
+        if let url = receivedData?.url {
+            guard let openUrl = URL(string: url) else {
+                preconditionFailure("レストランページのURLを変換できませんでした")
+            }
+            UIApplication.shared.open(openUrl)
         }
     }
 }
