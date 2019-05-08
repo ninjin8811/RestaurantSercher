@@ -41,9 +41,13 @@
 ＜使用している外部ライブラリ＞
 
 ・Alamofire
-・Nuke
+
 ・SwiftLint
+
+・Nuke
+
 ・SVProgressHUD
+
 ・SwiftyJSON（入れたけど使っていない）
 
 
