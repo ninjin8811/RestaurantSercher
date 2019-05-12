@@ -50,5 +50,4 @@ class RequestData {
             after(isFetched)
         })
     }
-    
 }
