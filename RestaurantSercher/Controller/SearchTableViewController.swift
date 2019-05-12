@@ -14,17 +14,13 @@ class SearchTableViewController: UITableViewController {
     @IBOutlet private var restListTableView: UITableView!
     @IBOutlet weak private var hitCountLabel: UILabel!
 
-    weak var delegate = UIApplication.shared.delegate as? AppDelegate
+    weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
     let gnaviURL = "https://api.gnavi.co.jp/RestSearchAPI/v3/"
     let accessKey = "bd585b21652351d6773c345c0266dcab"
+    let requestDataClass = RequestData()
 
     var selectedIndex = 0
-    var hitCount = 0
-    var latitude: Float = 0
-    var longitude: Float = 0
-    var range: Int = 0
     var loadStatus = false
-    var restaurants = [Restaurant]()
     var accessSentenses = [String]()
 
     override func viewDidLoad() {
@@ -58,24 +54,18 @@ class SearchTableViewController: UITableViewController {
 
         DataLoader.sharedUrlCache.diskCapacity = 0 //Disable the default disk cache
 
-        //AppDelegateから再検索に使う値を取得
-        if let appDelegate = delegate {
-            latitude = appDelegate.latitude
-            longitude = appDelegate.longitude
-            range = appDelegate.rangeIndex
-        } else {
-            print("AppDelegateを取得できませんでした")
-        }
-
-        hitCountLabel.text = "\(hitCount)件見つかりました"
+        hitCountLabel.text = "\(appDelegate?.totalHit ?? 0)件見つかりました"
         restListTableView.register(UINib(nibName: "SearchedRestaurantCell", bundle: nil), forCellReuseIdentifier: "restDataCell")
         initAccessSentense(0)
     }
 
     //アクセスの文章を取得したデータを繋ぎ合わせて作成
     func initAccessSentense(_ biginNum: Int) {
-        for i in biginNum ..< restaurants.count {
-            let appendText = AccessSentense(line: restaurants[i].access.line, station: restaurants[i].access.station, stationExit: restaurants[i].access.stationExit, walk: restaurants[i].access.walk, note: restaurants[i].access.note).accessText
+        guard let delegate = appDelegate else {
+            preconditionFailure("initAccessSentense: AppDelegateが存在しませんでした")
+        }
+        for i in biginNum ..< delegate.restData.count {
+            let appendText = AccessSentense(line: delegate.restData[i].access.line, station: delegate.restData[i].access.station, stationExit: delegate.restData[i].access.stationExit, walk: delegate.restData[i].access.walk, note: delegate.restData[i].access.note).accessText
             accessSentenses.append(appendText)
         }
         restListTableView.reloadData()
@@ -86,47 +76,7 @@ class SearchTableViewController: UITableViewController {
             preconditionFailure("遷移先のViewControllerを取得できませんでした")
         }
         destinationVC.accessSentense = accessSentenses[selectedIndex]
-        destinationVC.receivedData = restaurants[selectedIndex]
-    }
-
-    // MARK: - ぐるなびからデータを取ってくる処理
-    func sendRequest(offsetPage: Int) {
-
-        //リクエストパラメータ
-        let params: [String: Any] = [
-            "keyid": accessKey,
-            "range": range,
-            "latitude": latitude,
-            "longitude": longitude,
-            "hit_per_page": 20,
-            "offset_page": offsetPage
-        ]
-
-        let initAccessNum = restaurants.count
-
-        Alamofire.request(gnaviURL, method: .get, parameters: params).responseData(completionHandler: { (response) in
-            if response.result.isSuccess == true {
-                do {
-                    guard let dataResponse = response.data else {
-                        preconditionFailure("取得したデータが存在しませんでした")
-                    }
-
-                    //DecodeModelのデータにデコード
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let decodedData = try decoder.decode(GnaviData.self, from: dataResponse)
-                    self.restaurants.append(contentsOf: decodedData.rest)
-
-                    print(decodedData)
-                } catch {
-                    print("トライエラー！")
-                }
-            } else {
-                print("ぐるなびからデータを取得できませんでした： \(String(describing: response.result.error))")
-            }
-            self.loadStatus = false
-            self.initAccessSentense(initAccessNum)
-        })
+        destinationVC.receivedData = appDelegate?.restData[selectedIndex]
     }
 
     // MARK: - TableViewのデータ取り扱い
@@ -135,23 +85,26 @@ class SearchTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return restaurants.count
+        return appDelegate?.restData.count ?? 1
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let restCell = tableView.dequeueReusableCell(withIdentifier: "restDataCell", for: indexPath) as? SearchedRestaurantCell else {
             preconditionFailure("dequeueReusableCellの登録に失敗しました")
         }
+        guard let delegate = appDelegate else {
+            preconditionFailure("cellForRow: Appdelegateが存在しませんでした")
+        }
 
         //セルのアイテムにテキストを代入
-        restCell.restNameLabel.text = restaurants[indexPath.row].name
-        restCell.budgetLabel.text = "￥ \(restaurants[indexPath.row].budget)"
-        restCell.prLabel.text = restaurants[indexPath.row].pr.prShort
+        restCell.restNameLabel.text = delegate.restData[indexPath.row].name
+        restCell.budgetLabel.text = "￥ \(delegate.restData[indexPath.row].budget)"
+        restCell.prLabel.text = delegate.restData[indexPath.row].pr.prShort
         restCell.accessLabel.text = accessSentenses[indexPath.row]
-        restCell.restCategoryLabel.text = restaurants[indexPath.row].code.categoryNameL[0]
+        restCell.restCategoryLabel.text = delegate.restData[indexPath.row].code.categoryNameL[0]
 
         //NukeでImageをダウンロード
-        guard let imageURL = URL(string: restaurants[indexPath.row].imageUrl.shopImage1) else {
+        guard let imageURL = URL(string: delegate.restData[indexPath.row].imageUrl.shopImage1) else {
             preconditionFailure("StringからURLに変換できませんでした！")
         }
         let request = ImageRequest(url: imageURL, targetSize: CGSize(width: 500, height: 500), contentMode: .aspectFill)
@@ -167,14 +120,26 @@ class SearchTableViewController: UITableViewController {
         performSegue(withIdentifier: "goToRestDetail", sender: self)
     }
 
-    //残りのスクロール可能範囲が500px以下になったら再読込み
+    //残りのスクロール可能範囲が400px以下になったら再読込み
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard let delegate = appDelegate else {
+            preconditionFailure("Scroll: AppDelegateが存在しませんでした")
+        }
+
         let currentOffsetY = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.height
         let distanceToBottom = maximumOffset - currentOffsetY
-        if distanceToBottom < 500 && restaurants.count < 1000 && loadStatus == false {
+        let restDataCount = delegate.restData.count
+
+        if distanceToBottom < 400 && restDataCount < 1000 && loadStatus == false {
             loadStatus = true
-            sendRequest(offsetPage: restaurants.count / 20 + 1)
+
+            requestDataClass.sendRequest { (isFetched) in
+                if isFetched == true {
+                    self.initAccessSentense(restDataCount)
+                    self.loadStatus = false
+                }
+            }
         }
     }
 }

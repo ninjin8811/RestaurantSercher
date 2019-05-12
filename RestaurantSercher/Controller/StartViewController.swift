@@ -18,10 +18,6 @@ class StartViewController: UIViewController {
     let accessKey = "bd585b21652351d6773c345c0266dcab"
 
     let pickerDataSource: [String] = ["300m", "500m", "1km", "2km", "3km"]
-    var rangeIndex = 2
-    var nowLatitude: Float = 0
-    var nowLongitude: Float = 0
-    var passDataToNextView: GnaviData?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,15 +32,13 @@ class StartViewController: UIViewController {
     }
 
     @IBAction func searchButtonPressed(_ sender: UIButton) {
-
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-
             SVProgressHUD.show()
 
             requestDataClass.sendRequest { (isFetched) in
                 if isFetched == true {
                     SVProgressHUD.dismiss()
-                    //                    self.performSegue(withIdentifier: "goToSearchView", sender: self)
+                    self.performSegue(withIdentifier: "goToSearchView", sender: self)
                 } else {
                     SVProgressHUD.dismiss()
                     print("sendRequest失敗")
@@ -53,64 +47,6 @@ class StartViewController: UIViewController {
         } else {
             print("位置情報の取得を許可されていません")
         }
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let destinationVC = segue.destination as? SearchTableViewController else {
-            preconditionFailure("遷移先のViewを取得できませんでした")
-        }
-        if let passData = passDataToNextView {
-            destinationVC.hitCount = passData.totalHitCount
-            destinationVC.restaurants = passData.rest
-        }
-    }
-
-    // MARK: - ぐるなびからデータを取得する処理
-    func sendRequest() -> Bool {
-        let semaphore = DispatchSemaphore(value: 0)
-        let queue = DispatchQueue.global(qos: .utility)
-        var isFetched = false
-
-        guard let delegate = appDelegate else {
-            preconditionFailure("aaa")
-        }
-        let params: [String: Any] = [
-            "keyid": accessKey,
-            "range": rangeIndex,
-            "latitude": delegate.latitude,
-            "longitude": delegate.longitude,
-            "hit_per_page": 15 //ここ変える！！
-        ]
-
-        //2回目以降のリクエストがうまくいかない
-        Alamofire.request(gnaviURL, method: .get, parameters: params).responseData(queue: queue) { response in
-            if response.result.isSuccess == true {
-                do {
-                    guard let dataResponse = response.data else {
-                        preconditionFailure("取得したデータが存在しませんでした")
-                    }
-                    print(dataResponse)
-
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let decodedData = try decoder.decode(GnaviData.self, from: dataResponse)
-                    self.passDataToNextView = decodedData
-
-                    print(decodedData)
-
-                    if decodedData.totalHitCount != 0 {
-                        isFetched = true
-                    }
-                } catch {
-                    print("トライエラー！!!!!")
-                }
-            } else {
-                print("ぐるなびからデータを取得できませんでした： \(String(describing: response.result.error))")
-            }
-            semaphore.signal()
-        }
-        semaphore.wait()
-        return isFetched
     }
 }
 
@@ -153,8 +89,6 @@ extension StartViewController: CLLocationManagerDelegate {
         let location = locations[locations.count - 1]
         if location.horizontalAccuracy > 0 {
             // AppDelegateに値を保存
-            nowLatitude = Float(location.coordinate.latitude)
-            nowLongitude = Float(location.coordinate.longitude)
             appDelegate?.latitude = Float(location.coordinate.latitude)
             appDelegate?.longitude = Float(location.coordinate.longitude)
         }
