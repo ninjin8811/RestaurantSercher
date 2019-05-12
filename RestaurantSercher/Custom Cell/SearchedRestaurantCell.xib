@@ -23,7 +23,7 @@
                         <rect key="frame" x="10" y="5" width="306" height="30"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ぐるなび" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mBc-y2-yVr">
-                                <rect key="frame" x="0.0" y="4.5" width="70" height="21"/>
+                                <rect key="frame" x="0.0" y="4.5" width="301" height="21"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -33,6 +33,7 @@
                             <constraint firstAttribute="height" constant="30" id="aH2-BH-3Gk"/>
                             <constraint firstItem="mBc-y2-yVr" firstAttribute="centerY" secondItem="Gtz-LS-Zyz" secondAttribute="centerY" id="dNK-Uq-aFR"/>
                             <constraint firstItem="mBc-y2-yVr" firstAttribute="leading" secondItem="Gtz-LS-Zyz" secondAttribute="leading" id="lAN-s2-Jpb"/>
+                            <constraint firstAttribute="trailing" secondItem="mBc-y2-yVr" secondAttribute="trailing" constant="5" id="sKW-hj-7ny"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BHd-h6-zJ7">

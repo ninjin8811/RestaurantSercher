@@ -7,7 +7,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var latitude: Float = 0
     var longitude: Float = 0
-    var rangeIndex: Int = 0
+    var rangeIndex: Int = 2
     var offset: Int = 1
     var restData = [Restaurant]()
 

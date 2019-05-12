@@ -14,7 +14,7 @@ class SearchTableViewController: UITableViewController {
     @IBOutlet private var restListTableView: UITableView!
     @IBOutlet weak private var hitCountLabel: UILabel!
 
-    let delegate = UIApplication.shared.delegate as? AppDelegate
+    weak var delegate = UIApplication.shared.delegate as? AppDelegate
     let gnaviURL = "https://api.gnavi.co.jp/RestSearchAPI/v3/"
     let accessKey = "bd585b21652351d6773c345c0266dcab"
 

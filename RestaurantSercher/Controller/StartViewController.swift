@@ -6,12 +6,13 @@ import UIKit
 
 class StartViewController: UIViewController {
 
-    let delegate = UIApplication.shared.delegate as? AppDelegate
+    weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
 
     @IBOutlet weak private var pickerKeyboardButton: PickerViewKeyboard!
     @IBOutlet weak private var rangeLabel: UILabel!
 
     var locationManager = CLLocationManager()
+    let requestDataClass = RequestData()
 
     let gnaviURL = "https://api.gnavi.co.jp/RestSearchAPI/v3/"
     let accessKey = "bd585b21652351d6773c345c0266dcab"
@@ -25,6 +26,9 @@ class StartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if appDelegate == nil {
+            print("AppDelegateが存在しません")
+        }
         pickerKeyboardButton.delegate = self
         locationManager.delegate = self
 
@@ -32,16 +36,20 @@ class StartViewController: UIViewController {
     }
 
     @IBAction func searchButtonPressed(_ sender: UIButton) {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            locationManager.requestLocation()
 
-            sendRequest({ isFetched in
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+
+            SVProgressHUD.show()
+
+            requestDataClass.sendRequest { (isFetched) in
                 if isFetched == true {
-                    self.performSegue(withIdentifier: "goToSearchView", sender: self)
+                    SVProgressHUD.dismiss()
+                    //                    self.performSegue(withIdentifier: "goToSearchView", sender: self)
                 } else {
-                    print("sendRequest失敗！")
+                    SVProgressHUD.dismiss()
+                    print("sendRequest失敗")
                 }
-            })
+            }
         } else {
             print("位置情報の取得を許可されていません")
         }
@@ -58,31 +66,30 @@ class StartViewController: UIViewController {
     }
 
     // MARK: - ぐるなびからデータを取得する処理
-    func sendRequest(_ after:@escaping (Bool) -> Void) {
+    func sendRequest() -> Bool {
+        let semaphore = DispatchSemaphore(value: 0)
+        let queue = DispatchQueue.global(qos: .utility)
         var isFetched = false
+
+        guard let delegate = appDelegate else {
+            preconditionFailure("aaa")
+        }
         let params: [String: Any] = [
             "keyid": accessKey,
             "range": rangeIndex,
-            "latitude": nowLatitude,
-            "longitude": nowLongitude,
+            "latitude": delegate.latitude,
+            "longitude": delegate.longitude,
             "hit_per_page": 15 //ここ変える！！
         ]
 
-        if let appDelegate = delegate {
-            appDelegate.latitude = nowLatitude
-            appDelegate.longitude = nowLongitude
-            appDelegate.rangeIndex = rangeIndex
-        }
-
-        SVProgressHUD.show()
-
         //2回目以降のリクエストがうまくいかない
-        Alamofire.request(gnaviURL, method: .get, parameters: params).responseData(completionHandler: { (response) in
+        Alamofire.request(gnaviURL, method: .get, parameters: params).responseData(queue: queue) { response in
             if response.result.isSuccess == true {
                 do {
                     guard let dataResponse = response.data else {
                         preconditionFailure("取得したデータが存在しませんでした")
                     }
+                    print(dataResponse)
 
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -95,14 +102,15 @@ class StartViewController: UIViewController {
                         isFetched = true
                     }
                 } catch {
-                    print("トライエラー！")
+                    print("トライエラー！!!!!")
                 }
             } else {
                 print("ぐるなびからデータを取得できませんでした： \(String(describing: response.result.error))")
             }
-            after(isFetched)
-            SVProgressHUD.dismiss()
-        })
+            semaphore.signal()
+        }
+        semaphore.wait()
+        return isFetched
     }
 }
 
@@ -123,7 +131,7 @@ extension StartViewController: PickerViewKeyboardDelegate {
 
     func didDone(sender: PickerViewKeyboard, selectedRow: Int) {
         rangeLabel.text = "半径 \(pickerDataSource[selectedRow]) 以内"
-        rangeIndex = selectedRow + 1
+        appDelegate?.rangeIndex = selectedRow + 1
         sender.resignFirstResponder()
     }
 }
@@ -137,14 +145,18 @@ extension StartViewController: CLLocationManagerDelegate {
         if status == .authorizedWhenInUse {
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.distanceFilter = 1000
+            locationManager.startUpdatingLocation()
         }
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[locations.count - 1]
         if location.horizontalAccuracy > 0 {
+            // AppDelegateに値を保存
             nowLatitude = Float(location.coordinate.latitude)
             nowLongitude = Float(location.coordinate.longitude)
+            appDelegate?.latitude = Float(location.coordinate.latitude)
+            appDelegate?.longitude = Float(location.coordinate.longitude)
         }
     }
 
