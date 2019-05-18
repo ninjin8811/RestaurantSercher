@@ -21,34 +21,6 @@ class RestDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //Settings to cache images
-        // 1
-        DataLoader.sharedUrlCache.diskCapacity = 0
-
-        let pipeline = ImagePipeline {
-            // 2
-            do {
-                let dataCache = try DataCache(name: "com.restaurantsearcher.datacache")
-                // 3
-                dataCache.sizeLimit = 200 * 1024 * 1024
-                // 4
-                $0.dataCache = dataCache
-            } catch {
-                print("トライエラー")
-            }
-        }
-
-        // 5
-        ImagePipeline.shared = pipeline
-
-        let contentMode = ImageLoadingOptions.ContentModes(success: .scaleAspectFill, failure: .scaleAspectFit, placeholder: .scaleAspectFit)
-        ImageLoadingOptions.shared.contentModes = contentMode
-        ImageLoadingOptions.shared.placeholder = UIImage(named: "loading")
-        ImageLoadingOptions.shared.failureImage = UIImage(named: "no-image")
-        ImageLoadingOptions.shared.transition = .fadeIn(duration: 0.5)
-
-        DataLoader.sharedUrlCache.diskCapacity = 0 //Disable the default disk cache
-
         setContents()
     }
 
@@ -74,8 +46,7 @@ class RestDetailViewController: UIViewController {
             accessLabel.text = "アクセス: \(accessSentense)"
             opentimeLabel.text = "営業時間: \(restData.opentime)"
             holidayLabel.text = "定休日: \(restData.holiday)"
-            callButton.titleLabel?.text = restData.tel
-            urlButton.titleLabel?.text = restData.url
+            callButton.setTitle(restData.tel, for: .normal)
         }
     }
 

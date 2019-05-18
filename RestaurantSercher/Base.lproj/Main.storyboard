@@ -307,7 +307,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yVm-jt-CFm">
-                                <rect key="frame" x="238.5" y="319" width="106.5" height="30"/>
+                                <rect key="frame" x="238.5" y="319" width="126.5" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="0120-107-929"/>
                                 <userDefinedRuntimeAttributes>
@@ -327,14 +327,13 @@
                             <constraint firstItem="HsL-qc-pRX" firstAttribute="leading" secondItem="wCs-9Y-rfw" secondAttribute="leading" constant="20" id="53R-lQ-PTw"/>
                             <constraint firstItem="eN5-wd-Rqa" firstAttribute="trailing" secondItem="wCs-9Y-rfw" secondAttribute="trailing" id="6ea-JR-t8E"/>
                             <constraint firstItem="wCs-9Y-rfw" firstAttribute="trailing" secondItem="ALj-5c-wGE" secondAttribute="trailing" constant="20" id="8ha-lN-GnA"/>
-                            <constraint firstItem="tU0-zx-K66" firstAttribute="centerX" secondItem="xIl-T7-KBL" secondAttribute="centerX" id="ETj-08-IKb"/>
+                            <constraint firstItem="wCs-9Y-rfw" firstAttribute="trailing" secondItem="yVm-jt-CFm" secondAttribute="trailing" constant="10" id="HY9-dm-llh"/>
                             <constraint firstItem="efF-su-nWQ" firstAttribute="top" secondItem="XhN-XT-mKe" secondAttribute="bottom" constant="10" id="K4I-cq-J7N"/>
                             <constraint firstItem="eN5-wd-Rqa" firstAttribute="top" secondItem="wCs-9Y-rfw" secondAttribute="top" id="KxS-8f-1Bc"/>
-                            <constraint firstItem="wCs-9Y-rfw" firstAttribute="trailing" secondItem="yVm-jt-CFm" secondAttribute="trailing" constant="30" id="eGw-Sm-fj6"/>
+                            <constraint firstItem="tU0-zx-K66" firstAttribute="centerX" secondItem="xIl-T7-KBL" secondAttribute="centerX" id="YHG-MU-YGp"/>
                             <constraint firstItem="wCs-9Y-rfw" firstAttribute="trailing" secondItem="efF-su-nWQ" secondAttribute="trailing" constant="20" id="eHC-G9-GMr"/>
                             <constraint firstItem="XhN-XT-mKe" firstAttribute="top" secondItem="yVm-jt-CFm" secondAttribute="bottom" constant="20" id="fWc-OD-wbT"/>
                             <constraint firstItem="eN5-wd-Rqa" firstAttribute="leading" secondItem="wCs-9Y-rfw" secondAttribute="leading" id="gT6-Cp-doM"/>
-                            <constraint firstItem="wCs-9Y-rfw" firstAttribute="bottom" secondItem="tU0-zx-K66" secondAttribute="bottom" constant="50" id="mOi-fK-TBf"/>
                             <constraint firstItem="HsL-qc-pRX" firstAttribute="top" secondItem="efF-su-nWQ" secondAttribute="bottom" constant="10" id="nkI-ae-WjC"/>
                             <constraint firstItem="XhN-XT-mKe" firstAttribute="leading" secondItem="wCs-9Y-rfw" secondAttribute="leading" constant="20" id="ogM-VH-r2H"/>
                             <constraint firstItem="ALj-5c-wGE" firstAttribute="top" secondItem="HsL-qc-pRX" secondAttribute="bottom" constant="10" id="ots-rB-4TO"/>
@@ -344,6 +343,7 @@
                             <constraint firstItem="wCs-9Y-rfw" firstAttribute="trailing" secondItem="HsL-qc-pRX" secondAttribute="trailing" constant="20" id="udc-IQ-Vwk"/>
                             <constraint firstItem="wCs-9Y-rfw" firstAttribute="trailing" secondItem="XhN-XT-mKe" secondAttribute="trailing" constant="20" id="xuN-KG-jiU"/>
                             <constraint firstItem="efF-su-nWQ" firstAttribute="leading" secondItem="wCs-9Y-rfw" secondAttribute="leading" constant="20" id="zH7-gb-zKy"/>
+                            <constraint firstItem="wCs-9Y-rfw" firstAttribute="bottom" secondItem="tU0-zx-K66" secondAttribute="bottom" constant="50" id="zdr-Uc-RJU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="wCs-9Y-rfw"/>
                     </view>

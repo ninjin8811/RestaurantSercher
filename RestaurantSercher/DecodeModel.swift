@@ -1,12 +1,21 @@
 import Foundation
 
-struct GnaviData: Codable {
+class ErrorCode: Codable {
+    let error: ErrorMessage
+}
+
+class ErrorMessage: Codable {
+    let code: Int
+    let message: String
+}
+
+class GnaviData: Codable {
     let totalHitCount: Int
     let hitPerPage: Int
     var rest: [Restaurant]
 }
 
-struct Restaurant: Codable {
+class Restaurant: Codable {
     let name: String
     let address: String
     let url: String
@@ -22,7 +31,7 @@ struct Restaurant: Codable {
     let code: Code
 }
 
-struct Access: Codable {
+class Access: Codable {
     let line: String
     let station: String
     let stationExit: String
@@ -30,16 +39,16 @@ struct Access: Codable {
     let note: String
 }
 
-struct RestImage: Codable {
+class RestImage: Codable {
     let shopImage1: String
     let shopImage2: String
 }
 
-struct PRData: Codable {
+class PRData: Codable {
     let prShort: String
     let prLong: String
 }
 
-struct Code: Codable {
+class Code: Codable {
     let categoryNameL: [String]
 }

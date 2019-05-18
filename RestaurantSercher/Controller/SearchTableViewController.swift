@@ -14,10 +14,9 @@ class SearchTableViewController: UITableViewController {
     @IBOutlet private var restListTableView: UITableView!
     @IBOutlet weak private var hitCountLabel: UILabel!
 
-    weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
     let gnaviURL = "https://api.gnavi.co.jp/RestSearchAPI/v3/"
     let accessKey = "bd585b21652351d6773c345c0266dcab"
-    let requestDataClass = RequestData()
+    var requestDataClass = RequestData()
 
     var selectedIndex = 0
     var loadStatus = false
@@ -26,46 +25,29 @@ class SearchTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        //Settings to cache images
-        // 1
-        DataLoader.sharedUrlCache.diskCapacity = 0
-
-        let pipeline = ImagePipeline {
-            // 2
-            do {
-                let dataCache = try DataCache(name: "com.restaurantsearcher.datacache")
-                // 3
-                dataCache.sizeLimit = 200 * 1024 * 1024
-                // 4
-                $0.dataCache = dataCache
-            } catch {
-                print("トライエラー")
-            }
-        }
-
-        // 5
-        ImagePipeline.shared = pipeline
-
-        let contentMode = ImageLoadingOptions.ContentModes(success: .scaleAspectFill, failure: .scaleAspectFit, placeholder: .scaleAspectFit)
-        ImageLoadingOptions.shared.contentModes = contentMode
-        ImageLoadingOptions.shared.placeholder = UIImage(named: "loading")
-        ImageLoadingOptions.shared.failureImage = UIImage(named: "no-image")
-        ImageLoadingOptions.shared.transition = .fadeIn(duration: 0.5)
-
-        DataLoader.sharedUrlCache.diskCapacity = 0 //Disable the default disk cache
-
-        hitCountLabel.text = "\(appDelegate?.totalHit ?? 0)件見つかりました"
+        hitCountLabel.text = "\(requestDataClass.totalHit)件見つかりました"
         restListTableView.register(UINib(nibName: "SearchedRestaurantCell", bundle: nil), forCellReuseIdentifier: "restDataCell")
         initAccessSentense(0)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        //詳細画面から戻ってきたときに参照していたセルを選択解除する
+        restListTableView.indexPathsForSelectedRows?.forEach({ (indexPath) in
+            restListTableView.deselectRow(at: indexPath, animated: true)
+        })
+    }
+
     //アクセスの文章を取得したデータを繋ぎ合わせて作成
     func initAccessSentense(_ biginNum: Int) {
-        guard let delegate = appDelegate else {
-            preconditionFailure("initAccessSentense: AppDelegateが存在しませんでした")
-        }
-        for i in biginNum ..< delegate.restData.count {
-            let appendText = AccessSentense(line: delegate.restData[i].access.line, station: delegate.restData[i].access.station, stationExit: delegate.restData[i].access.stationExit, walk: delegate.restData[i].access.walk, note: delegate.restData[i].access.note).accessText
+        for i in biginNum ..< requestDataClass.restData.count {
+            let appendText = AccessSentense(
+                line: requestDataClass.restData[i].access.line,
+                station: requestDataClass.restData[i].access.station,
+                stationExit: requestDataClass.restData[i].access.stationExit,
+                walk: requestDataClass.restData[i].access.walk,
+                note: requestDataClass.restData[i].access.note).accessText
             accessSentenses.append(appendText)
         }
         restListTableView.reloadData()
@@ -76,7 +58,7 @@ class SearchTableViewController: UITableViewController {
             preconditionFailure("遷移先のViewControllerを取得できませんでした")
         }
         destinationVC.accessSentense = accessSentenses[selectedIndex]
-        destinationVC.receivedData = appDelegate?.restData[selectedIndex]
+        destinationVC.receivedData = requestDataClass.restData[selectedIndex]
     }
 
     // MARK: - TableViewのデータ取り扱い
@@ -85,55 +67,50 @@ class SearchTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return appDelegate?.restData.count ?? 1
+        return requestDataClass.restData.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let restCell = tableView.dequeueReusableCell(withIdentifier: "restDataCell", for: indexPath) as? SearchedRestaurantCell else {
             preconditionFailure("dequeueReusableCellの登録に失敗しました")
         }
-        guard let delegate = appDelegate else {
-            preconditionFailure("cellForRow: Appdelegateが存在しませんでした")
-        }
-
         //セルのアイテムにテキストを代入
-        restCell.restNameLabel.text = delegate.restData[indexPath.row].name
-        restCell.budgetLabel.text = "￥ \(delegate.restData[indexPath.row].budget)"
-        restCell.prLabel.text = delegate.restData[indexPath.row].pr.prShort
+        restCell.restNameLabel.text = requestDataClass.restData[indexPath.row].name
+        restCell.budgetLabel.text = "￥ \(requestDataClass.restData[indexPath.row].budget)"
+        restCell.prLabel.text = requestDataClass.restData[indexPath.row].pr.prShort
         restCell.accessLabel.text = accessSentenses[indexPath.row]
-        restCell.restCategoryLabel.text = delegate.restData[indexPath.row].code.categoryNameL[0]
+        restCell.restCategoryLabel.text = requestDataClass.restData[indexPath.row].code.categoryNameL[0]
 
         //NukeでImageをダウンロード
-        guard let imageURL = URL(string: delegate.restData[indexPath.row].imageUrl.shopImage1) else {
-            preconditionFailure("StringからURLに変換できませんでした！")
+        if let imageURL = URL(string: requestDataClass.restData[indexPath.row].imageUrl.shopImage1) {
+            let request = ImageRequest(url: imageURL, targetSize: CGSize(width: 500, height: 500), contentMode: .aspectFill)
+            Nuke.loadImage(with: request, into: restCell.restImageView)
+        } else {
+            restCell.restImageView.image = UIImage(named: "no-image")
         }
-        let request = ImageRequest(url: imageURL, targetSize: CGSize(width: 500, height: 500), contentMode: .aspectFill)
-        Nuke.loadImage(with: request, into: restCell.restImageView)
 
         return restCell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
         selectedIndex = indexPath.row
 
         performSegue(withIdentifier: "goToRestDetail", sender: self)
     }
 
-    //残りのスクロール可能範囲が400px以下になったら再読込み
+    //一番下のセルまでスクロールしたら再読込み
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard let delegate = appDelegate else {
-            preconditionFailure("Scroll: AppDelegateが存在しませんでした")
-        }
 
         let currentOffsetY = scrollView.contentOffset.y
         let maximumOffset = scrollView.contentSize.height - scrollView.frame.height
         let distanceToBottom = maximumOffset - currentOffsetY
-        let restDataCount = delegate.restData.count
+        let restDataCount = requestDataClass.restData.count
 
-        if distanceToBottom < 400 && restDataCount < 1000 && loadStatus == false {
+        if distanceToBottom <= 0 && restDataCount < 1000 && loadStatus == false {
             loadStatus = true
 
+            //オフセットを設定して追加のデータを読み込み
+            requestDataClass.offset = restDataCount + 1
             requestDataClass.sendRequest { (isFetched) in
                 if isFetched == true {
                     self.initAccessSentense(restDataCount)

@@ -1,7 +1,6 @@
 import Alamofire
 import CoreLocation
 import SVProgressHUD
-import SwiftyJSON
 import UIKit
 
 class StartViewController: UIViewController {
@@ -35,18 +34,39 @@ class StartViewController: UIViewController {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
             SVProgressHUD.show()
 
+            requestDataClass.restData.removeAll()
             requestDataClass.sendRequest { (isFetched) in
                 if isFetched == true {
                     SVProgressHUD.dismiss()
                     self.performSegue(withIdentifier: "goToSearchView", sender: self)
                 } else {
                     SVProgressHUD.dismiss()
+
+                    guard let errorData = self.requestDataClass.errorData?.error else {
+                        preconditionFailure("エラーデータが存在しませんでした")
+                    }
+
+                    //アラートの生成
+                    let alert = UIAlertController(title: "エラー(\(errorData.code))", message: errorData.message, preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+
+                    alert.addAction(okAction)
+
+                    self.present(alert, animated: true, completion: nil)
+
                     print("sendRequest失敗")
                 }
             }
         } else {
             print("位置情報の取得を許可されていません")
         }
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let destinationVC = segue.destination as? SearchTableViewController else {
+            preconditionFailure("遷移先のViewControllerを取得できませんでした")
+        }
+        destinationVC.requestDataClass = requestDataClass
     }
 }
 
@@ -67,7 +87,7 @@ extension StartViewController: PickerViewKeyboardDelegate {
 
     func didDone(sender: PickerViewKeyboard, selectedRow: Int) {
         rangeLabel.text = "半径 \(pickerDataSource[selectedRow]) 以内"
-        appDelegate?.rangeIndex = selectedRow + 1
+        requestDataClass.rangeIndex = selectedRow + 1
         sender.resignFirstResponder()
     }
 }
@@ -88,9 +108,8 @@ extension StartViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[locations.count - 1]
         if location.horizontalAccuracy > 0 {
-            // AppDelegateに値を保存
-            appDelegate?.latitude = Float(location.coordinate.latitude)
-            appDelegate?.longitude = Float(location.coordinate.longitude)
+            requestDataClass.latitude = Float(location.coordinate.latitude)
+            requestDataClass.longitude = Float(location.coordinate.longitude)
         }
     }
 
