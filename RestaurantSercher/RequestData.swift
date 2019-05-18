@@ -13,7 +13,7 @@ class RequestData {
     var offset = 1
     var totalHit = 0
     var restData = [Restaurant]()
-    var errorData: ErrorCode?
+    var errorData: ErrorMessage?
 
     //API通信した後、通信が成功したかどうかをBoolで返す
     func sendRequest(_ after:@escaping (Bool) -> Void) {
@@ -37,7 +37,7 @@ class RequestData {
                 }
                 let responseJSON = JSON(responseValue)
 
-                //デコード処理
+                //デコード設定
                 guard let dataResponse = response.data else {
                     preconditionFailure("取得したデータが存在しませんでした")
                 }
@@ -45,11 +45,9 @@ class RequestData {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
 
                 //レストランデータの取得に成功した場合の処理
-                if responseJSON.count >= 2 {
+                if responseJSON.count > 2 {
                     do {
                         let decodedData = try decoder.decode(GnaviData.self, from: dataResponse)
-                        //                        appDelegate.totalHit = decodedData.totalHitCount
-                        //                        appDelegate.restData.append(contentsOf: decodedData.rest)
                         self.totalHit = decodedData.totalHitCount
                         self.restData.append(contentsOf: decodedData.rest)
 
@@ -59,13 +57,13 @@ class RequestData {
                     }
                 } else { //エラーデータを受け取った場合の処理
                     do {
+                        print(responseJSON)
                         let decodedData = try decoder.decode(ErrorCode.self, from: dataResponse)
-                        self.errorData = decodedData
+                        self.errorData = decodedData.error[0]
                     } catch {
                         print("トライエラー！")
                     }
                 }
-
             } else {
                 print("ぐるなびと通信できませんでした。： \(String(describing: response.result.error))")
             }

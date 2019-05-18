@@ -1,7 +1,7 @@
 import Foundation
 
 class ErrorCode: Codable {
-    let error: ErrorMessage
+    var error: [ErrorMessage]
 }
 
 class ErrorMessage: Codable {

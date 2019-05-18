@@ -42,7 +42,7 @@ class StartViewController: UIViewController {
                 } else {
                     SVProgressHUD.dismiss()
 
-                    guard let errorData = self.requestDataClass.errorData?.error else {
+                    guard let errorData = self.requestDataClass.errorData else {
                         preconditionFailure("エラーデータが存在しませんでした")
                     }
 
